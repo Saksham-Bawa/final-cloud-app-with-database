@@ -1,24 +1,15 @@
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
 from . import views
 
 app_name = 'onlinecourse'
 urlpatterns = [
-    # route is a string contains a URL pattern
-    # view refers to the view function
-    # name the URL
-    path(route='', view=views.CourseListView.as_view(), name='index'),
-    path('registration/', views.registration_request, name='registration'),
-    path('login/', views.login_request, name='login'),
-    path('logout/', views.logout_request, name='logout'),
-    # ex: /onlinecourse/5/
-    path('<int:pk>/', views.CourseDetailView.as_view(), name='course_details'),
-    # ex: /enroll/5/
-    path('<int:course_id>/enroll/', views.enroll, name='enroll'),
-
-    # <HINT> Create a route for submit view
-
-    # <HINT> Create a route for show_exam_result view
-
- ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path(route='', view=views.index, name='index'),
+    path(route='register/', view=views.registration_request, name='register'),
+    path(route='login/', view=views.login_request, name='login'),
+    path(route='logout/', view=views.logout_request, name='logout'),
+    path(route='<int:course_id>/enroll/', view=views.enroll, name='enroll'),
+    path(route='<int:course_id>/', view=views.course_details, name='course_details'),
+    path(route='<int:course_id>/submit/', view=views.submit, name='submit'),
+    path(route='<int:course_id>/submission/<int:submission_id>/result/',
+         view=views.show_exam_result, name='show_exam_result'),
+]
